@@ -1,7 +1,7 @@
 function permutationSort(a) {
     let count = 0;
 
-    function generatePermutations(array, start) {
+    function permute(array, start) {
         if (start === array.length) {
             count++;
             if (isSorted(array)) {
@@ -13,7 +13,7 @@ function permutationSort(a) {
         for (let i = start; i < array.length; i++) {
             [array[start], array[i]] = [array[i], array[start]];
             
-            if (generatePermutations(array, start + 1)) {
+            if (permute(array, start + 1)) {
                 return true;
             }
             
