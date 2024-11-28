@@ -17,12 +17,11 @@ function permutationSort(a) {
     }
 
     function permute(n) {
-        if (sortCheck(a)) {
-            return;
-        }
-
         if (n == 1) {
-            return;
+            count ++
+            if (sortCheck(a)) {
+                return;
+            }
         }
 
         for (let i = 0; i < n - 1; i++) {
@@ -34,8 +33,6 @@ function permutationSort(a) {
             else {
                 [a[0], a[n - 1]] = [a[n - 1], a[0]];
             }
-
-            count++;
         }
 
         permute(n - 1);
