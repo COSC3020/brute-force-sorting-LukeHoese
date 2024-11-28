@@ -1,57 +1,45 @@
 function permutationSort(a) {
-    var count = 0;
+    let count = 0;
 
-    // Function to check if the array is sorted
-    function sortCheck(array) {
-        for (let i = 1; i < array.length; i++) {
-            // If two adjacent elements are out of order, it's not sorted
-            if (array[i] < array[i - 1]) {
+    // Helper function to generate all permutations of the array
+    function generatePermutations(arr, start) {
+        if (start === arr.length) {
+            count++; // Increment count for each permutation tried
+            // Check if the array is sorted
+            if (isSorted(arr)) {
+                return true; // If sorted, return true
+            }
+            return false; // If not sorted, continue
+        }
+
+        for (let i = start; i < arr.length; i++) {
+            // Swap elements at indices `start` and `i`
+            [arr[start], arr[i]] = [arr[i], arr[start]];
+            
+            // Recursively generate permutations
+            if (generatePermutations(arr, start + 1)) {
+                return true; // If sorted permutation is found, exit
+            }
+            
+            // Swap back to restore the original order
+            [arr[start], arr[i]] = [arr[i], arr[start]];
+        }
+
+        return false; // No sorted permutation found at this level
+    }
+
+    // Helper function to check if the array is sorted
+    function isSorted(arr) {
+        for (let i = 1; i < arr.length; i++) {
+            if (arr[i] < arr[i - 1]) {
                 return false;
             }
         }
         return true;
     }
 
-    // Heap's algorithm to generate permutations
-    function permute(n) {
-        // Base case: if we've generated a full permutation
-        if (n === 1) {
-            count++; // Increment permutation count
-            if (sortCheck(a)) {
-                return true; // If sorted, stop the recursion
-            }
-            return false; // Otherwise, keep trying
-        }
+    // Start the permutation generation from index 0
+    generatePermutations(a, 0);
 
-        // Generate permutations recursively
-        let foundSorted = false;
-        for (let i = 0; i < n - 1; i++) {
-            foundSorted = permute(n - 1); // Recurse with the remaining elements
-
-            // Swap based on Heap's algorithm
-            if (n % 2 === 0) {
-                [a[i], a[n - 1]] = [a[n - 1], a[i]]; // Swap i and n-1 for even n
-            } else {
-                [a[0], a[n - 1]] = [a[n - 1], a[0]]; // Swap 0 and n-1 for odd n
-            }
-
-            // If sorted permutation found, stop further recursion
-            if (foundSorted) return true;
-        }
-
-        // Handle the last permutation after the loop
-        return permute(n - 1);
-    }
-
-    // Start generating permutations from the whole array
-    permute(a.length);
-
-    // Return the count of permutations tried before sorting
     return count;
 }
-
-// Example usage:
-const arr = [1, 0, 2];
-console.log(permutationSort(arr)); // Output: number of permutations tried before sorted
-console.log(arr); // The sorted array [0, 1, 2]
-
