@@ -4,7 +4,7 @@ function permutationSort(a) {
     function permute(array, start) {
         if (start === array.length) {
             count++;
-            if (checkSort(array)) {
+            if (checkSorted(array)) {
                 return true;
             }
             return false;
