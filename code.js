@@ -4,13 +4,15 @@ function permutationSort(a) {
 
     // helper function to "create" permutations
     function permute(array, start) {
-        // once permutation is complete, 
+        // once permutation is complete check if sorted
         if (start === array.length) {
             // increment count for every array permutation checked
             count++;
+            // if checkSorted returns true, return true for permute call
             if (checkSorted(array)) {
                 return true;
             }
+            // else return false for permute call
             return false;
         }
 
