@@ -21,6 +21,10 @@ function permutationSort(a) {
             return;
         }
 
+        if (n == 1) {
+            return;
+        }
+
         for (let i = 0; i < n - 1; i++) {
             permute(n - 1);
 
