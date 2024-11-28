@@ -22,6 +22,7 @@ function permutationSort(a) {
             if (sortCheck(a)) {
                 return;
             }
+            return;
         }
 
         for (let i = 0; i < n - 1; i++) {
