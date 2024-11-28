@@ -17,14 +17,14 @@ function permutationSort(a) {
                 return true;
             }
             
-            [arr[start], arr[i]] = [arr[i], arr[start]];
+            [array[start], array[i]] = [array[i], array[start]];
         }
 
         return false;
     }
 
     function checkSorted(array) {
-        for (let i = 1; i < arr.length; i++) {
+        for (let i = 1; i < array.length; i++) {
             if (array[i] < array[i - 1]) {
                 return false;
             }
