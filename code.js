@@ -1,44 +1,57 @@
 function permutationSort(a) {
     var count = 0;
 
-    if (a.length == 0 || a.length == 1) {
-        return count;
-    }
-
-    // function to check if array is sorted
+    // Function to check if the array is sorted
     function sortCheck(array) {
         for (let i = 1; i < array.length; i++) {
-            // if at any point two adjacent elements are not in the correct order, array is not sorted
+            // If two adjacent elements are out of order, it's not sorted
             if (array[i] < array[i - 1]) {
-                return false
+                return false;
             }
         }
-        return true
+        return true;
     }
 
+    // Heap's algorithm to generate permutations
     function permute(n) {
-        if (n == 1) {
-            count ++
+        // Base case: if we've generated a full permutation
+        if (n === 1) {
+            count++; // Increment permutation count
             if (sortCheck(a)) {
-                return;
+                return true; // If sorted, stop the recursion
             }
-            return;
+            return false; // Otherwise, keep trying
         }
 
+        // Generate permutations recursively
+        let foundSorted = false;
         for (let i = 0; i < n - 1; i++) {
-            permute(n - 1);
+            foundSorted = permute(n - 1); // Recurse with the remaining elements
 
-            if (n % 2 == 0) {
-                [a[i], a[n - 1]] = [a[n - 1], a[i]];
+            // Swap based on Heap's algorithm
+            if (n % 2 === 0) {
+                [a[i], a[n - 1]] = [a[n - 1], a[i]]; // Swap i and n-1 for even n
+            } else {
+                [a[0], a[n - 1]] = [a[n - 1], a[0]]; // Swap 0 and n-1 for odd n
             }
-            else {
-                [a[0], a[n - 1]] = [a[n - 1], a[0]];
-            }
+
+            // If sorted permutation found, stop further recursion
+            if (foundSorted) return true;
         }
 
-        permute(n - 1);
+        // Handle the last permutation after the loop
+        return permute(n - 1);
     }
 
-    permute(a.length)
+    // Start generating permutations from the whole array
+    permute(a.length);
+
+    // Return the count of permutations tried before sorting
     return count;
 }
+
+// Example usage:
+const arr = [1, 0, 2];
+console.log(permutationSort(arr)); // Output: number of permutations tried before sorted
+console.log(arr); // The sorted array [0, 1, 2]
+
